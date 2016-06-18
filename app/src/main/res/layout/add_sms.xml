@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/form_time"
-        android:layout_gravity="center_horizontal" />
-
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/form_date"
-        android:layout_gravity="center_horizontal" />
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
@@ -29,6 +20,25 @@
         android:inputType="textCapSentences|textMultiLine"
         android:hint="@string/form_hint_message"
         android:id="@+id/form_input_message" />
+    <TextView android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Time:" />
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_time"
+        android:layout_gravity="center_horizontal" />
+    <TextView android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Date:" />
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/form_date"
+        android:layout_gravity="center_horizontal" />
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -55,3 +65,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

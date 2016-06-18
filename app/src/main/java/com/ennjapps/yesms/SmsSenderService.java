@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 
-import com.github.yeriomin.smsscheduler.Activity.SmsSchedulerPreferenceActivity;
+import com.ennjapps.yesms.Activity.SettingsExampleActivity;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,7 @@ public class SmsSenderService extends IntentService {
 
         PendingIntent deliveredPendingIntent = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean deliveryReports = prefs.getBoolean(SmsSchedulerPreferenceActivity.PREFERENCE_DELIVERY_REPORTS, false);
+        boolean deliveryReports = prefs.getBoolean(SettingsExampleActivity.PREFERENCE_DELIVERY_REPORTS, false);
         if (deliveryReports) {
             deliveredPendingIntents = new ArrayList<PendingIntent>();
             Intent deliveredIntent = new Intent(this, SmsDeliveredReceiver.class);

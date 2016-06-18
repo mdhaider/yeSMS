@@ -10,18 +10,22 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ import java.util.List;
 
 
 public class AddSmsActivity extends AppCompatActivity {
+    SmsListActivity smsListActivity;
+
 
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
     final private String[] permissionsRequired = new String[] {
@@ -59,9 +65,12 @@ public class AddSmsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_settings:
-                startActivityForResult(new Intent(this, SmsSchedulerPreferenceActivity.class), 1);
-                break;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+
+
         }
         return true;
     }
@@ -204,6 +213,9 @@ public class AddSmsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_sms);
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Filling existing sms info if possible
         long smsId = getSmsId(savedInstanceState);
         if (smsId > 0) {
@@ -219,7 +231,8 @@ public class AddSmsActivity extends AppCompatActivity {
         timeScheduled.set(GregorianCalendar.MONTH, formDate.getMonth());
         timeScheduled.set(GregorianCalendar.DAY_OF_MONTH, formDate.getDayOfMonth());
         if (timeScheduled.getTimeInMillis() < GregorianCalendar.getInstance().getTimeInMillis()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.form_validation_datetime), Toast.LENGTH_SHORT).show();
+
+            displayToast(getString(R.string.form_validation_datetime));
             return;
         }
         sms.setTimestampScheduled(timeScheduled.getTimeInMillis());
@@ -380,4 +393,18 @@ public class AddSmsActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+    public void displayToast(String message) {
+        // Inflate toast XML layout
+        View layout = getLayoutInflater().inflate(R.layout.toast_layout,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+        // Fill in the message into the textview
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(message);
+        // Construct the toast, set the view and display
+        Toast toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.show();
+    }
+
 }

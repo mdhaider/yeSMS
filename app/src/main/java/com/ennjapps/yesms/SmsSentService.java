@@ -9,7 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsManager;
 
-import com.github.yeriomin.smsscheduler.Activity.SmsListActivity;
+import com.ennjapps.yesms.Activity.SmsListActivity;
+
 
 public class SmsSentService extends IntentService {
 

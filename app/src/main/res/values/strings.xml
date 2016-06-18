@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">YeSMS</string>
+    <string name="app_name" translatable="false">YeSms</string>
     <string name="contact_format" translatable="false">%1$s <![CDATA[<]]>%2$s<![CDATA[>]]></string>
     <string name="form_hint_contact">To</string>
     <string name="form_hint_message">Message</string>
@@ -7,7 +7,7 @@
     <string name="form_button_cancel">Cancel</string>
     <string name="form_button_delete">Delete</string>
     <string name="form_validation_datetime">Please choose future date</string>
-    <string name="list_button_add">Schedule a message</string>
+    <string name="list_button_add">Tap to Schedule</string>
     <string name="list_sms_info_template">%1$s to %2$s at %3$s</string>
     <string name="list_status_pending">Will send</string>
     <string name="list_status_failed">Failed</string>
@@ -23,7 +23,31 @@
     <string name="error_radio_off">Phone in airplane mode</string>
     <string name="error_unknown">Unknown error</string>
     <string name="pref_send_delivery_report">Delivery reports</string>
+    <string name="sans_serif_light">sans-serif-light</string>
+    <string name="title_activity_bucket">Schedule a message</string>
     <string name="pref_send_delivery_report_summary">Some carriers charge for SMS delivery reports</string>
     <string name="menu_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="action_settings">Settings</string>
+
+    <string name="pref_title_application_version">Application Version</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+    </string-array>
+
 
 </resources>

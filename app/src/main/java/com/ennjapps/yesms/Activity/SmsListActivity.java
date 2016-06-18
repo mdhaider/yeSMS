@@ -5,22 +5,28 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ennjapps.yesms.DbHelper;
+import com.ennjapps.yesms.MyPreferences;
 import com.ennjapps.yesms.R;
 import com.ennjapps.yesms.SmsModel;
 
-
+import java.util.Calendar;
 
 
 public class SmsListActivity extends ListActivity {
+    private static long back_pressed_time;
+    private static long PERIOD = 2000;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,9 +37,7 @@ public class SmsListActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_settings:
-                startActivityForResult(new Intent(this, SmsSchedulerPreferenceActivity.class), 1);
-                break;
+
         }
         return true;
     }
@@ -66,6 +70,7 @@ public class SmsListActivity extends ListActivity {
 
         LayoutInflater lf = getLayoutInflater();
         View headerView = lf.inflate(R.layout.item_add, getListView(), false);
+        getListView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         headerView.setClickable(true);
         getListView().addHeaderView(headerView);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,6 +81,29 @@ public class SmsListActivity extends ListActivity {
                 startActivity(intent);
             }
         });
+        Calendar c=Calendar.getInstance();
+        int hours=c.get(Calendar.HOUR_OF_DAY);
+
+        String greeting=null;
+        if(hours>=0 && hours<12) {
+            greeting = "Good Morning";
+        }else if(hours>=12 && hours<16) {
+            greeting = "Good Afternoon";
+        }else if (hours>=16 && hours<21){
+            greeting="Good Evening";
+        }else if (hours>=21 && hours<24) {
+            greeting = "Good Night";
+        }
+        MyPreferences pref = new MyPreferences(SmsListActivity.this);
+        if (pref.isFirstTime()) {
+            displayToast( "Hi" +" "+ pref.getUsername());
+
+            pref.setOld(true);
+        } else {
+            displayToast( greeting + " " + pref.getUsername());
+
+        }
+
     }
 
     public void gotoNextActivity(View view) {
@@ -127,5 +155,26 @@ public class SmsListActivity extends ListActivity {
             DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME
         );
         return getString(R.string.list_sms_info_template, status, recipient, datetime);
+    }
+    @Override
+    public void onBackPressed() {
+        if (back_pressed_time + PERIOD > System.currentTimeMillis()) super.onBackPressed();
+        else
+            displayToast("Press once again to exit!");
+        //Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+        back_pressed_time = System.currentTimeMillis();
+    }
+    public void displayToast(String message) {
+        // Inflate toast XML layout
+        View layout = getLayoutInflater().inflate(R.layout.toast_layout,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+        // Fill in the message into the textview
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(message);
+        // Construct the toast, set the view and display
+        Toast toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.show();
     }
 }
